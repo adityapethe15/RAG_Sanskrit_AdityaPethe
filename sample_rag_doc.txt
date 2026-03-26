@@ -1,0 +1,177 @@
+Sanskrit Semantic Vector RAG System - Complete Documentation
+
+Section 1: System Overview
+The Sanskrit Semantic Vector RAG (Retrieval-Augmented Generation) system is an advanced information retrieval platform designed specifically for Sanskrit texts. It combines modern machine learning techniques with traditional Sanskrit linguistic knowledge to provide semantically intelligent search and answer generation capabilities.
+
+Section 2: Architecture Components
+The system consists of five core components working in harmony:
+
+2.1 Sanskrit Processor
+Handles linguistic preprocessing including:
+- Devanagari script recognition and validation
+- Text normalization to remove diacritical variations
+- Transliteration between Devanagari and Latin scripts
+- Sentence boundary detection while preserving verse structure
+- Stopword removal for Sanskrit language
+- Character encoding conversion (UTF-8 support)
+
+2.2 Embedding Manager
+Generates semantic vector representations using sentence-transformers:
+- Model: all-MiniLM-L6-v2 (384-dimensional embeddings)
+- Supports both single text and batch embedding generation
+- Implements cosine similarity for vector comparison
+- Handles numerical stability and normalization
+
+2.3 Vector Store (FAISS)
+Manages efficient similarity search over embeddings:
+- Facebook AI Similarity Search (FAISS) backend
+- Index persistence to disk for long-term storage
+- Metadata preservation for source attribution
+- Top-k retrieval with configurable parameters
+
+2.4 RAG Pipeline
+Orchestrates the complete retrieval and generation workflow:
+- Document chunking with semantic overlap
+- Query preprocessing and embedding
+- Context aggregation from retrieved chunks
+- Source attribution and document linking
+
+2.5 Frontend Interface
+Streamlit-based web application providing:
+- Document upload interface
+- Interactive query panel
+- Real-time result visualization
+- API health monitoring
+
+Section 3: Processing Pipeline - Offline Phase
+
+Step 1: Document Upload
+- Accepts PDF and TXT files
+- Validates file structure and encoding
+- Stores file metadata for attribution
+
+Step 2: Text Extraction
+- Converts PDF to raw text
+- Preserves document structure
+- Handles encoding issues gracefully
+
+Step 3: Text Preprocessing
+- Normalizes whitespace and formatting
+- Removes noise and special characters
+- Converts text to canonical form
+- Handles transliteration variants
+
+Step 4: Semantic Chunking
+- Splits text into meaningful chunks
+- Maintains semantic boundaries
+- Adds overlapping context
+- Preserves paragraph structure
+
+Step 5: Vector Embedding
+- Generates embedding for each chunk
+- Creates 384-dimensional semantic vector
+- Stores mapping between chunks and vectors
+
+Step 6: Vector Indexing
+- Indexes all embeddings in FAISS
+- Stores chunk text and metadata
+- Saves index to persistent storage
+- Creates searchable vector database
+
+Section 4: Processing Pipeline - Online Phase
+
+Step 1: Query Reception
+- User submits query in Sanskrit or transliterated form
+- Query is received through REST API or web interface
+
+Step 2: Query Preprocessing
+- Normalizes query text
+- Handles transliteration if needed
+- Removes noise and special characters
+- Converts to canonical form
+
+Step 3: Query Embedding
+- Generates embedding for user query
+- Uses same model as document embeddings
+- Produces 384-dimensional vector
+
+Step 4: Vector Search
+- FAISS performs similarity search
+- Retrieves top-k most relevant chunks
+- Calculates cosine similarity scores
+- Ranks results by relevance
+
+Step 5: Context Aggregation
+- Combines retrieved chunks
+- Preserves order and structure
+- Creates coherent context window
+- Links to source documents
+
+Step 6: Answer Generation
+- Passes context and query to generation module
+- Generates response constrained by context
+- Ensures factual accuracy
+- Provides confidence scoring
+
+Step 7: Source Attribution
+- Returns document name for each result
+- Includes chunk identifiers
+- Provides relevant excerpts
+- Enables verification
+
+Section 5: Key Features
+
+5.1 Semantic Understanding
+Uses transformer-based embeddings to capture meaning beyond keyword matching.
+
+5.2 Sanskrit Optimization
+Specialized processing for Devanagari script and Sanskrit grammar.
+
+5.3 Transliteration Support
+Handles multiple transliteration schemes for Sanskrit text.
+
+5.4 Scalability
+FAISS indexing enables efficient search over large document collections.
+
+5.5 Transparency
+Source attribution allows users to verify answers against original documents.
+
+5.6 Persistence
+Vector indices and document metadata are stored on disk for long-term use.
+
+Section 6: API Endpoints
+
+Preprocessing:
+- POST /process/tokenize - Tokenize Sanskrit text
+- POST /process/preprocess - Normalize and clean text
+- POST /process/detect-script - Identify script type
+- POST /process/split-sentences - Break text into sentences
+
+Embeddings:
+- POST /embed/text - Generate single embedding
+- POST /embed/batch - Generate batch embeddings
+
+RAG System:
+- POST /rag/ingest - Add document to vector store
+- POST /rag/retrieve - Search for relevant chunks
+- POST /rag/query - Full query with context generation
+
+File Management:
+- POST /upload-document - Upload and ingest document
+- GET /health - Check system health
+
+Section 7: Performance Characteristics
+
+- Embedding Generation: 384 dimensions (all-MiniLM-L6-v2)
+- Search Speed: O(log n) with FAISS indexing
+- Memory Efficiency: Compressed indices for large collections
+- Accuracy: Semantic similarity-based ranking
+- Scalability: Tested with thousands of documents
+
+Section 8: Use Cases
+
+- Sanskrit Literature Research: Search across classical texts
+- Educational Platform: Tutoring with cited sources
+- Academic Assistance: Homework and research help
+- Cultural Preservation: Digital archive access
+- Translation Support: Context-aware translation assistance

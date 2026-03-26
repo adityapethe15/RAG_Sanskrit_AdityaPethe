@@ -1,0 +1,113 @@
+{
+  "info": {
+    "name": "Sanskrit Semantic Vector RAG API",
+    "description": "API collection for Sanskrit RAG system",
+    "version": "0.1.0"
+  },
+  "requests": [
+    {
+      "name": "Health Check",
+      "method": "GET",
+      "url": "http://localhost:8000/health",
+      "description": "Check API health status"
+    },
+    {
+      "name": "Root Endpoint",
+      "method": "GET",
+      "url": "http://localhost:8000/",
+      "description": "Get API information"
+    },
+    {
+      "name": "Tokenize Text",
+      "method": "POST",
+      "url": "http://localhost:8000/process/tokenize",
+      "body": {
+        "text": "नमस्ते विश्वम्"
+      },
+      "description": "Tokenize Sanskrit text"
+    },
+    {
+      "name": "Preprocess Text",
+      "method": "POST",
+      "url": "http://localhost:8000/process/preprocess",
+      "body": {
+        "text": "नमस्ते विश्वम्। यह एक संस्कृत पाठ है।"
+      },
+      "description": "Full preprocessing with normalization and stopword removal"
+    },
+    {
+      "name": "Detect Script",
+      "method": "POST",
+      "url": "http://localhost:8000/process/detect-script",
+      "body": {
+        "text": "नमस्ते विश्वम्"
+      },
+      "description": "Detect if text is in Devanagari script"
+    },
+    {
+      "name": "Split Sentences",
+      "method": "POST",
+      "url": "http://localhost:8000/process/split-sentences",
+      "body": {
+        "text": "नमस्ते विश्वम्। यह एक संस्कृत पाठ है। कृपया पढ़ें।"
+      },
+      "description": "Split text into sentences"
+    },
+    {
+      "name": "Summarize Text",
+      "method": "POST",
+      "url": "http://localhost:8000/summarize",
+      "body": {
+        "text": "ऋग्वेद चारों वेदों में सबसे प्राचीन है। इसमें 1028 सूक्त हैं। ऋग्वेद के मंत्र देवताओं की स्तुति करते हैं। यजुर्वेद यज्ञ की प्रक्रिया बताता है।",
+        "num_sentences": 2
+      },
+      "description": "Summarize Sanskrit text"
+    },
+    {
+      "name": "Embed Text",
+      "method": "POST",
+      "url": "http://localhost:8000/embed/text",
+      "body": {
+        "text": "संस्कृत भाषा"
+      },
+      "description": "Generate semantic embedding for text"
+    },
+    {
+      "name": "Embed Batch",
+      "method": "POST",
+      "url": "http://localhost:8000/embed/batch",
+      "body": ["नमस्ते", "धन्यवाद", "कृपया"],
+      "description": "Generate embeddings for multiple texts"
+    },
+    {
+      "name": "Ingest Document",
+      "method": "POST",
+      "url": "http://localhost:8000/rag/ingest",
+      "body": {
+        "content": "ऋग्वेद चारों वेदों में सबसे प्राचीन है। इसमें 1028 सूक्त हैं जो दस मंडलों में विभाजित हैं।",
+        "source": "vedas"
+      },
+      "description": "Ingest document into RAG system"
+    },
+    {
+      "name": "Retrieve Documents",
+      "method": "POST",
+      "url": "http://localhost:8000/rag/retrieve",
+      "body": {
+        "query": "वेद",
+        "k": 5
+      },
+      "description": "Retrieve similar documents"
+    },
+    {
+      "name": "RAG Query",
+      "method": "POST",
+      "url": "http://localhost:8000/rag/query",
+      "body": {
+        "query": "ऋग्वेद व्याकरण",
+        "k": 5
+      },
+      "description": "Query RAG system with context generation"
+    }
+  ]
+}

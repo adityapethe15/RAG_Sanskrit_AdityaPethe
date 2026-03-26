@@ -1,0 +1,81 @@
+# Python
+
+**pycache**/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environments
+
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables (secrets)
+
+.env
+.env.local
+.env.*.local
+
+# Vector Store (auto-generated)
+
+vector_store/
+backend/vector_store/
+*.faiss
+*.pkl
+
+# Logs
+
+*.log
+logs/
+
+# Temporary Files
+
+*.tmp
+*.temp
+/tmp/
+
+# OS Files
+
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (if any frontend tools used)
+
+node_modules/
+npm-debug.log*
+
+# Cache
+
+.cache/
+*.cache
+
+# Testing
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter (if used)
+
+.ipynb_checkpoints/
+
+# Streamlit (ignore only secrets, NOT config)
+
+.streamlit/secrets.toml
+
+# Build / Packaging (optional safety)
+
+build/
+dist/
+*.egg-info/
