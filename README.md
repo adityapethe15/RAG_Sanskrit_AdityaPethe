@@ -12,23 +12,20 @@ This project implements a complete RAG pipeline that:
 * Processes and indexes them for semantic retrieval
 * Accepts user queries (English / Sanskrit / mixed)
 * Retrieves relevant context
-* Generates concise answers using a CPU-based LLM
+* Generates context-aware answers using a lightweight CPU-based LLM
+
+The system follows a modular RAG architecture separating retrieval and generation components.
 
 ---
 
 ## ⚙️ System Architecture
 
 User Query
-↓
-Query Embedding (Sentence Transformer)
-↓
-FAISS Vector Search
-↓
-Top-K Relevant Chunks Retrieved
-↓
-Combine Query + Context
-↓
-LLM (FLAN-T5) generates final answer
+→ Embedding Generation
+→ FAISS Vector Retrieval
+→ Top-K Context Selection
+→ Context + Query Fusion
+→ LLM-based Answer Generation
 
 ---
 
@@ -47,7 +44,7 @@ LLM (FLAN-T5) generates final answer
 * **RAG Pipeline**
 
   * Context-based retrieval
-  * Query-aware answer generation (NOT summarization)
+  * Query-aware answer generation (designed to avoid simple summarization)
 
 * **LLM-Based Answer Generation**
 
@@ -134,6 +131,31 @@ streamlit run app.py
 
 ---
 
+## 🧪 Example Usage
+
+### Step 1: Ingest Document
+
+Upload or paste text such as:
+
+Kalidasa was a famous Sanskrit poet and playwright known for works like Abhijnanasakuntalam.
+
+---
+
+### Step 2: Ask Query
+
+Example queries:
+
+* Who is Kalidasa?
+* What is the document about?
+
+---
+
+### Step 3: Expected Output
+
+Kalidasa is a famous Sanskrit poet and playwright known for his literary works.
+
+---
+
 ## 📌 Important Design Decisions
 
 * FAISS → Fast and efficient vector search on CPU
@@ -146,6 +168,7 @@ streamlit run app.py
 ## ⚠️ Limitations
 
 * Sanskrit embeddings are not highly optimized (limited pretrained support)
+* Similarity scores may be lower for Sanskrit queries
 * Performance is better with English or mixed queries
 * Pure Sanskrit query understanding may be weaker
 
@@ -176,6 +199,7 @@ streamlit run app.py
 ✔ LLM-based answer generation
 ✔ CPU-only execution
 ✔ Modular architecture
+✔ Clear setup and execution instructions
 
 ---
 
