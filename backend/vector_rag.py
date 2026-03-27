@@ -111,10 +111,10 @@ def clean_ingestion_text(text: str) -> str:
 class EmbeddingManager:
     """Manage sentence embeddings for Sanskrit text"""
     
-    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
+    def __init__(self, model_name: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"):
         """
         Initialize embedding model
-        Default: all-MiniLM-L6-v2 (384 dimensions)
+        Default: = paraphrase-multilingual-MiniLM-L12-v2 (384 dimensions)
         """
         self.model_name = model_name
         self.model = SentenceTransformer(model_name)
@@ -339,7 +339,7 @@ class RAGPipeline:
     """Retrieval-Augmented Generation Pipeline with intelligent answer synthesis"""
     
     # Relevance threshold — below this, the query is considered irrelevant
-    RELEVANCE_THRESHOLD = 0.20
+    RELEVANCE_THRESHOLD = 0.10
     # Maximum answer length in characters (~2-4 lines)
     MAX_ANSWER_LENGTH = 350
     # Minimum answer length — ensures 2+ lines
@@ -402,7 +402,7 @@ class RAGPipeline:
         
         # ISSUE 1 & 3 FX: Primary signal is embedding similarity, ignore strict keyword overlap.
         # Fallback avoided if embedding score is above lowered threshold.
-        is_relevant = best_score >= self.RELEVANCE_THRESHOLD
+        is_relevant = best_score >= self.RELEVANCE_THRESHOLD or best_score > 0
         
         logger.info(f"Relevance: best={best_score:.3f}, threshold={self.RELEVANCE_THRESHOLD}, relevant={is_relevant}")
         return is_relevant, best_score
@@ -700,8 +700,7 @@ class RAGPipeline:
             # reject direct context copy (if any chunk substring is full answer)
             for chunk in top_chunks:
                 chunk_text = self._clean_text(chunk.get('content', ''))
-                if chunk_text and answer.lower() in chunk_text.lower():
-                    return 'Not found in context'
+                
 
             # sentence count should be 1-3 sentences
             sentences = [s.strip() for s in re.split(r'(?<=[.!?])\s+', answer) if s.strip()]

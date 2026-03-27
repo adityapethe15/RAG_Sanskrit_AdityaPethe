@@ -24,7 +24,7 @@ class Config:
     # Embedding Configuration
     EMBEDDING_MODEL = os.getenv(
         "EMBEDDING_MODEL",
-        "sentence-transformers/all-MiniLM-L6-v2"
+        "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     )
     VECTOR_DIMENSION = int(os.getenv("VECTOR_DIMENSION", 384))
     
